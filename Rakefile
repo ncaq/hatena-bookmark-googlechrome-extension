@@ -80,7 +80,9 @@ task :package_firefox => [ :filecopy_firefox ] do
   # TODO src_path を使うように
   # TODO output_path を使うように
   # TODO project_name を使うように
-  sh 'find obj/firefox | grep -v \'^obj/firefox/tests\\(/\\|$\\)\' | xargs zip bookmark-firefox-extension.xpi'
+  cd 'obj/firefox'
+  sh 'find . | grep -v \'^./tests\\(/\\|$\\)\' | xargs zip ../../bookmark-firefox-extension.xpi'
+  cd '../..'
 end
 
 task :package => [ :package_chrome, :package_firefox ]
