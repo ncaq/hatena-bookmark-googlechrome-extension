@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "はてなブックマーク GoogleChrome 拡張"
+    "message": "はてなブックマーク Firefox 拡張(WebExtensions)"
   },
   "extDescription": {
-    "message": "はてなブックマークを GoogleChrome でより便利に使える、はてなオフィシャルの拡張です"
+    "message": "はてなブックマークを Firefox でより便利に使える、WebExtensions版の拡張です"
   }
 }
