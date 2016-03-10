@@ -8,7 +8,7 @@ const B_STATIC_HTTP = 'http://cdn-ak.b.st-hatena.com/';
 var SiteinfoRequestor = {
     init: function SR_init() {
         var self = SiteinfoRequestor;
-        self.port = chrome.extension.connect();
+        self.port = chrome.runtime.connect();
         self.port.onMessage.addListener(self.onMessage);
         self.port.postMessage({
             message: 'get_siteinfo_for_url',
