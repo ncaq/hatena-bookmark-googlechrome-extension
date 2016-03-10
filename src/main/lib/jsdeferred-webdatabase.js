@@ -248,13 +248,13 @@
     })();
 
     /*-- include SQLAbstract --*/
-    /* rev: 9a01158cc8454d80869fff950ff6caf760d8b546 */    
+    /* rev: 9a01158cc8454d80869fff950ff6caf760d8b546 */
     (function(Global) {
         var p = function() {
             if (typeof console != 'undefined')
                 console.log(Array.prototype.slice.call(arguments, 0));
         }
-    
+
         var extend = function(to, from) {
             if (!from) return to;
             for (var key in from) {
@@ -262,13 +262,13 @@
             }
             return to;
         }
-    
+
         var SQLAbstract = Global.SQLAbstract = function(options) {
             this.options = extend({
             }, options);
             return this;
         }
-    
+
         extend(SQLAbstract, {
             isString: function(obj) {
                 return typeof obj === 'string' || obj instanceof String;
@@ -276,7 +276,7 @@
             NOT_NULL: "0x01NOTNULL",
             NULL: null
         });
-    
+
         SQLAbstract.prototype = {
             select: function(table, fields, where, options) {
                 if (!fields) {
@@ -344,11 +344,11 @@
                     bind = bind.concat(wheres[1]);
                 }
                 /* SQLite not support update limit/order ...
-                if (options) {
-                    var opt = this.optionsToSQL(options);
-                    stmt += opt[0];
-                    bind = bind.concat(opt[1]);
-                }
+                   if (options) {
+                   var opt = this.optionsToSQL(options);
+                   stmt += opt[0];
+                   bind = bind.concat(opt[1]);
+                   }
                 */
                 return [stmt, bind];
             },
@@ -409,7 +409,7 @@
                         var hash = obj[1];
                         var re = /:(\w(:?[\w_]+)?)/g;
                         var bind = [];
-    
+
                         stmt = stmt.replace(re, function(m) {
                             // var key = RegExp.$1;
                             var key = m.substring(1);
@@ -674,7 +674,7 @@
             },
             createTable: function() {
                 return klass.execute( sql.create(klass.table,klass.fields) )
-                            .next( klass.__afterCreateTable );
+                    .next( klass.__afterCreateTable );
             },
             __afterCreateTable: function(r) {
                 if (!this._infoCache) {
