@@ -11,9 +11,8 @@ if (popupMode) {
     }
 } else if (request_uri.param('debug')) {
 } else {
-    chrome.tabs.getSelected(null, function(tab) {
-        chrome.windows.get(tab.windowId, function(win) {
-            window.currentWin = win;
+    chrome.tabs.getCurrent(function(tab) {
+        chrome.windows.getCurrent(function(win) {
             BG.popupWinInfo = {
                 windowId: win.id,
                 tabId: tab.id,
@@ -92,7 +91,7 @@ function loadWindowPosition(win) {
 function getInformation() {
     var d = new Deferred();
     if (popupMode) {
-        BG.chrome.tabs.getSelected(null, function(tab) {
+        chrome.tabs.query({active: true}, function(tab) {
             d.call({
                 url: tab.url,
                 faviconUrl: tab.faviconUrl,
