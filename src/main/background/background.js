@@ -76,11 +76,11 @@ $.extendWithAccessorProperties(Manager, {
     },
     _iconDataCache: {},
     get ctx() {
-       if (!Manager._ctx) {
-                var canvas = document.getElementById('bookmark-icon-canvas');
-                Manager._ctx = canvas.getContext('2d');
-       }
-       return Manager._ctx;
+        if (!Manager._ctx) {
+            var canvas = document.getElementById('bookmark-icon-canvas');
+            Manager._ctx = canvas.getContext('2d');
+        }
+        return Manager._ctx;
     },
     getIconData: function(iconId) {
         if (!Manager._iconDataCache[iconId]) {
@@ -102,37 +102,37 @@ $.extendWithAccessorProperties(Manager, {
         if (tab && tab.url && tab.url.indexOf('http') == 0 && Config.get('background.bookmarkcounter.enabled')) {
 
             if (UserManager.user) {
-                 UserManager.user.hasBookmark(tab.url).next(function(bool) {
-                     if (bool) {
-                         chrome.browserAction.setIcon({tabId: tab.id, path: '/images/chrome-b-checked.png'});
-                     }
-                 });
+                UserManager.user.hasBookmark(tab.url).next(function(bool) {
+                    if (bool) {
+                        chrome.browserAction.setIcon({tabId: tab.id, path: '/images/chrome-b-checked.png'});
+                    }
+                });
             }
 
             HTTPCache.counter.get(tab.url).next(function(count) {
                 if (count == null) {
-                    chrome.browserAction.setBadgeText({tabId: tab.id, 
-                        text: '-',
-                    });
-                    chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
-                        color: [200,200,200, 255],
-                    });
+                    chrome.browserAction.setBadgeText({tabId: tab.id,
+                                                       text: '-',
+                                                      });
+                    chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id,
+                                                                  color: [200,200,200, 255],
+                                                                 });
                 } else {
-                    chrome.browserAction.setBadgeText({tabId: tab.id, 
-                        text: "" + count,
-                    });
-                    chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
-                        color: [96,255,0, 200],
-                    });
+                    chrome.browserAction.setBadgeText({tabId: tab.id,
+                                                       text: "" + count,
+                                                      });
+                    chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id,
+                                                                  color: [96,255,0, 200],
+                                                                 });
                 }
             });
         } else {
-            chrome.browserAction.setBadgeText({tabId: tab.id, 
-                text: '',
-            });
-            chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
-                color: [99,99,99, 255],
-            });
+            chrome.browserAction.setBadgeText({tabId: tab.id,
+                                               text: '',
+                                              });
+            chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id,
+                                                          color: [99,99,99, 255],
+                                                         });
         }
     },
     updateTab: function(tab) {
@@ -224,7 +224,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, opt) {
         Manager.updateTabById(tabId);
 });
 
-chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+chrome.tabs.onActivated.addListener(function(tabId) {
     Manager.updateCurrentTab();
 });
 
@@ -270,18 +270,18 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 /*
-chrome.browserAction.onClicked.addListener(function(tab) {
-    Manager.editBookmarkTab(tab);
-});
+  chrome.browserAction.onClicked.addListener(function(tab) {
+  Manager.editBookmarkTab(tab);
+  });
 */
 
 chrome.extension.onConnect.addListener(function(port, name) {
-  port.onMessage.addListener(function(info, con) {
-      if (!localStorage.eula) return;
+    port.onMessage.addListener(function(info, con) {
+        if (!localStorage.eula) return;
 
-      if (info.message)
-          ConnectMessenger.trigger(info.message, [info.data, con]);
-  });
+        if (info.message)
+            ConnectMessenger.trigger(info.message, [info.data, con]);
+    });
 });
 
 // 右クリックメニュー
@@ -306,29 +306,29 @@ chrome.contextMenus.create({
     }
 });
 /*
-chrome.contextMenus.create({
-    'title':'このページをはてなブックマークで表示',
-    'contexts':["page", "frame", "selection", "editable", "image", "video", "audio"],
-    'onclick':function(info, tab) {
-        var url = tab.url;
-        window.open('http://b.hatena.ne.jp/entry?url='+encodeURIComponent(url));
-    }
-});
-chrome.contextMenus.create({
-    'title':'このリンクをはてなブックマークに追加',
-    'contexts':['link'],
-    'onclick':function(info, tab) {
-        var url = info.linkUrl;
-        chrome.windows.create({
-            url : ('/background/popup.html?popup=1&url='+encodeURIComponent(url)),
-            focused : true,
-            type : 'popup',
-            height : 550,
-            width : 500
-        });
+  chrome.contextMenus.create({
+  'title':'このページをはてなブックマークで表示',
+  'contexts':["page", "frame", "selection", "editable", "image", "video", "audio"],
+  'onclick':function(info, tab) {
+  var url = tab.url;
+  window.open('http://b.hatena.ne.jp/entry?url='+encodeURIComponent(url));
+  }
+  });
+  chrome.contextMenus.create({
+  'title':'このリンクをはてなブックマークに追加',
+  'contexts':['link'],
+  'onclick':function(info, tab) {
+  var url = info.linkUrl;
+  chrome.windows.create({
+  url : ('/background/popup.html?popup=1&url='+encodeURIComponent(url)),
+  focused : true,
+  type : 'popup',
+  height : 550,
+  width : 500
+  });
 
-    }
-});
+  }
+  });
 */
 chrome.contextMenus.create({
     'title':'このリンクをはてなブックマークで表示',
@@ -359,34 +359,34 @@ Model.Bookmark.afterSave = function() {
 
 // debug
 /*
-setTimeout(function() {
-    var url = 'http://d.hatena.ne.jp/HolyGrail/20091107/1257607807';
-    url = 'http://b.hatena.ne.jp/articles/200911/598';
-    url = 'http://www.amazon.co.jp/exec/obidos/ASIN/B002T9VBP8/hatena-uk-22/ref=nosim';
-    url = 'http://b.hatena.ne.jp/entry/s/addons.mozilla.org/ja/firefox/addon/1843';
-    url = 'https://addons.mozilla.org/ja/firefox/addon/1843';
-    // url = 'http://hail2u.net/blog/webdesign/yui3-css-reset-problem.html?xx';
-    url = 'http://example.com/';
-    url = '/background/popup.html?debug=1&url=' + encodeURIComponent(url);
-    // var url = 'http://www.hatena.ne.jp/';
-    chrome.tabs.create({
-        url: url,
-    });
-}, 10);
+  setTimeout(function() {
+  var url = 'http://d.hatena.ne.jp/HolyGrail/20091107/1257607807';
+  url = 'http://b.hatena.ne.jp/articles/200911/598';
+  url = 'http://www.amazon.co.jp/exec/obidos/ASIN/B002T9VBP8/hatena-uk-22/ref=nosim';
+  url = 'http://b.hatena.ne.jp/entry/s/addons.mozilla.org/ja/firefox/addon/1843';
+  url = 'https://addons.mozilla.org/ja/firefox/addon/1843';
+  // url = 'http://hail2u.net/blog/webdesign/yui3-css-reset-problem.html?xx';
+  url = 'http://example.com/';
+  url = '/background/popup.html?debug=1&url=' + encodeURIComponent(url);
+  // var url = 'http://www.hatena.ne.jp/';
+  chrome.tabs.create({
+  url: url,
+  });
+  }, 10);
 
-/*
-setTimeout(function() {
-    var url = '/tests/test.html';
-    chrome.tabs.create({
-        url: url,
-    });
-}, 10);
+  /*
+  setTimeout(function() {
+  var url = '/tests/test.html';
+  chrome.tabs.create({
+  url: url,
+  });
+  }, 10);
 */
 
 /*
-setTimeout(function() {
-chrome.windows.create({url:'../tests/test.html'});
-}, 10);
+  setTimeout(function() {
+  chrome.windows.create({url:'../tests/test.html'});
+  }, 10);
 */
 
 
