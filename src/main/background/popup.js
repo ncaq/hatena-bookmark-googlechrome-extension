@@ -91,7 +91,8 @@ function loadWindowPosition(win) {
 function getInformation() {
     var d = new Deferred();
     if (popupMode) {
-        chrome.tabs.query({active: true}, function(tab) {
+        chrome.tabs.query({active: true}, function(tabs) {
+            let tab = tabs[0];
             d.call({
                 url: tab.url,
                 faviconUrl: tab.faviconUrl,
