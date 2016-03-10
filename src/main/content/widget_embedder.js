@@ -112,7 +112,8 @@ extend(WidgetEmbedder.prototype, {
         paragraph._hb_isWidgetEmbedded = true;
 
         var link = this.getLink(paragraph);
-        if (!link || !/^https?:/.test(link.href)) return;
+        var h = /^https?:/;
+        if (!link || !h.test(link.href)) return;
         var point = this.getAnnotationPoint(paragraph, link);
         if (!point) return;
         var widgets = this.createWidgets(link);
@@ -150,8 +151,8 @@ extend(WidgetEmbedder.prototype, {
         }
 
         var annotation = this.siteinfo.annotation
-                         ? queryXPath(this.siteinfo.annotation, paragraph)
-                         : link;
+            ? queryXPath(this.siteinfo.annotation, paragraph)
+            : link;
         if (!annotation) return null;
         var position = (this.siteinfo.annotationPosition || '').toLowerCase();
         if (!position) {
